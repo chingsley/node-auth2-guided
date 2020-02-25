@@ -1,4 +1,4 @@
-# Web Auth II Guided Project
+# Web Auth II Guided Project - Adding Sessions for authentication
 
 Guided project for **Web Auth II** Module.
 
