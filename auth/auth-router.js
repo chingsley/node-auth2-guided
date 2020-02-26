@@ -39,4 +39,18 @@ router.post('/login', (req, res) => {
     });
 });
 
+router.get('/logout', (req, res) => {
+  if (req.session) {
+    req.session.destroy(err => {
+      if (err) {
+        res.status(500).json({ message: 'Logout failed. Please try again later.' });
+      } else {
+        res.status(200).json({ message: 'Successfully logged out.' });
+      }
+    });
+  } else {
+    res.status(200).json({ message: 'You are already logged out.' });
+  }
+});
+
 module.exports = router;
