@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 const session = require('express-session');
+const KnexSessionStore = require('connect-session-knex')(session); // KnexSessionStore is with capital K
 
 const authRouter = require('../auth/auth-router.js');
 const usersRouter = require('../users/users-router.js');
@@ -18,6 +19,13 @@ const sessionConfig = {
   },
   resave: false, // if there are no changes to the session, don't resave it
   saveUninitialized: true, // GDPR laws against setting cookies automatically. False for production, and only set it to true if user agrees to setting cookie on their browser
+  store: new KnexSessionStore({
+    knex: require('../database/dbConfig'),
+    tablename: 'sessions',
+    sidfieldname: 'sid',
+    createtable: true,
+    clearInterval: 1000 * 60 * 60,
+  })
 };
 
 server.use(helmet());

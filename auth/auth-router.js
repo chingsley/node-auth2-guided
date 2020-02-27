@@ -53,4 +53,12 @@ router.get('/logout', (req, res) => {
   }
 });
 
+router.delete('/', (req, res) => {
+  console.log(req.session);
+  if (req.session) {
+    req.session.destroy();
+  }
+  res.status(200).json({ message: 'Successfully logged out.' });
+});
+
 module.exports = router;
